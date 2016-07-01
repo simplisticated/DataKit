@@ -16,6 +16,12 @@
 		698B2F181D265DB9008CA3FA /* DataKitDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F171D265DB9008CA3FA /* DataKitDemoUITests.swift */; };
 		698B2F2E1D265E18008CA3FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F2C1D265E18008CA3FA /* MainViewController.swift */; };
 		698B2F2F1D265E18008CA3FA /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 698B2F2D1D265E18008CA3FA /* MainViewController.xib */; };
+		698B2F311D2660D7008CA3FA /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F301D2660D7008CA3FA /* Object.swift */; };
+		698B2F331D26617E008CA3FA /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F321D26617E008CA3FA /* Service.swift */; };
+		698B2F351D26647D008CA3FA /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F341D26647D008CA3FA /* Storage.swift */; };
+		698B2F371D266659008CA3FA /* ServiceLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F361D266659008CA3FA /* ServiceLink.swift */; };
+		698B2F3F1D266EFD008CA3FA /* CustomLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F3E1D266EFD008CA3FA /* CustomLink.swift */; };
+		698B2F431D266FEB008CA3FA /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F421D266FEB008CA3FA /* InMemoryStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,12 @@
 		698B2F191D265DB9008CA3FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		698B2F2C1D265E18008CA3FA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		698B2F2D1D265E18008CA3FA /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		698B2F301D2660D7008CA3FA /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
+		698B2F321D26617E008CA3FA /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		698B2F341D26647D008CA3FA /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		698B2F361D266659008CA3FA /* ServiceLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceLink.swift; sourceTree = "<group>"; };
+		698B2F3E1D266EFD008CA3FA /* CustomLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLink.swift; sourceTree = "<group>"; };
+		698B2F421D266FEB008CA3FA /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +170,12 @@
 		698B2F291D265DF0008CA3FA /* DataKit */ = {
 			isa = PBXGroup;
 			children = (
+				698B2F301D2660D7008CA3FA /* Object.swift */,
+				698B2F341D26647D008CA3FA /* Storage.swift */,
+				698B2F421D266FEB008CA3FA /* InMemoryStorage.swift */,
+				698B2F321D26617E008CA3FA /* Service.swift */,
+				698B2F361D266659008CA3FA /* ServiceLink.swift */,
+				698B2F3E1D266EFD008CA3FA /* CustomLink.swift */,
 			);
 			name = DataKit;
 			path = ../../../../Source;
@@ -313,8 +331,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				698B2F2E1D265E18008CA3FA /* MainViewController.swift in Sources */,
+				698B2F371D266659008CA3FA /* ServiceLink.swift in Sources */,
 				698B2EFA1D265DB9008CA3FA /* ViewController.swift in Sources */,
+				698B2F331D26617E008CA3FA /* Service.swift in Sources */,
+				698B2F431D266FEB008CA3FA /* InMemoryStorage.swift in Sources */,
 				698B2EF81D265DB9008CA3FA /* AppDelegate.swift in Sources */,
+				698B2F311D2660D7008CA3FA /* Object.swift in Sources */,
+				698B2F3F1D266EFD008CA3FA /* CustomLink.swift in Sources */,
+				698B2F351D26647D008CA3FA /* Storage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +565,7 @@
 				698B2F1E1D265DB9008CA3FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		698B2F1F1D265DB9008CA3FA /* Build configuration list for PBXNativeTarget "DataKitDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -549,6 +574,7 @@
 				698B2F211D265DB9008CA3FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		698B2F221D265DB9008CA3FA /* Build configuration list for PBXNativeTarget "DataKitDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -557,6 +583,7 @@
 				698B2F241D265DB9008CA3FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
