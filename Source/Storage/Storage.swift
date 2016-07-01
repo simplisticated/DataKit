@@ -27,6 +27,15 @@ public class Storage: NSObject {
     public class func deleteObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withUniqueIdentifier uniqueIdentifier: String, andCompletion completion: (() -> Void)?) {
     }
     
+    public class func numberOfAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void) {
+    }
+    
+    public class func numberOfObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, satisfyingRequirementsOfPredicate predicate: ((object: ObjectClass) -> Bool), withCompletion completion: (numberOfObjects: Int) -> Void) {
+    }
+    
+    public class func selectObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withBlockPredicate predicate: ((object: ObjectClass) -> Bool), andCompletion completion: (objects: [ObjectClass]) -> Void) {
+    }
+    
     
     // MARK: Private class methods
     

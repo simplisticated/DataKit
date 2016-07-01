@@ -57,6 +57,59 @@ public class InMemoryStorage: Storage {
         }
     }
     
+    public override class func numberOfAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            let table = getOrCreateTableForObjectWithType(ObjectClass.self)
+            let numberOfObjects = table.count
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(numberOfObjects: numberOfObjects)
+            })
+        }
+    }
+    
+    public override class func numberOfObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, satisfyingRequirementsOfPredicate predicate: ((object: ObjectClass) -> Bool), withCompletion completion: (numberOfObjects: Int) -> Void) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            let table = getOrCreateTableForObjectWithType(ObjectClass.self)
+            let numberOfObjectsInTable = table.count
+            var resultNumberOfObjects = 0
+            
+            for i in 0..<numberOfObjectsInTable {
+                let object = table[i]
+                let predicateBooleanResult = predicate(object: object)
+                
+                if predicateBooleanResult {
+                    resultNumberOfObjects += 1
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(numberOfObjects: resultNumberOfObjects)
+            })
+        }
+    }
+    
+    public override class func selectObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withBlockPredicate predicate: ((object: ObjectClass) -> Bool), andCompletion completion: (objects: [ObjectClass]) -> Void) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            let table = getOrCreateTableForObjectWithType(ObjectClass.self)
+            let numberOfObjectsInTable = table.count
+            var selectedObjects = [ObjectClass]()
+            
+            for i in 0..<numberOfObjectsInTable {
+                let object = table[i]
+                let predicateBooleanResult = predicate(object: object)
+                
+                if predicateBooleanResult {
+                    selectedObjects.append(object)
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                completion(objects: selectedObjects)
+            })
+        }
+    }
+    
     
     // MARK: Private class methods
     
