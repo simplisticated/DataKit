@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="DataKitDemo" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="ehS-LJ-qeo" id="uHd-Dn-q36"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,23 +16,19 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Screen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMI-h6-U9a">
-                    <rect key="frame" x="20" y="264" width="560" height="71"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="71" id="Kfe-lF-9sZ"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="32"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ehS-LJ-qeo">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="gMI-h6-U9a" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Yv5-7x-g77"/>
-                <constraint firstItem="gMI-h6-U9a" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="eMu-OK-btG"/>
-                <constraint firstAttribute="trailing" secondItem="gMI-h6-U9a" secondAttribute="trailing" constant="20" id="esU-jW-ZYg"/>
+                <constraint firstItem="ehS-LJ-qeo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0FF-RA-Wcj"/>
+                <constraint firstAttribute="bottom" secondItem="ehS-LJ-qeo" secondAttribute="bottom" id="3Vw-hR-LPb"/>
+                <constraint firstItem="ehS-LJ-qeo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6Mu-E2-3m2"/>
+                <constraint firstAttribute="trailing" secondItem="ehS-LJ-qeo" secondAttribute="trailing" id="c47-Xr-RLu"/>
             </constraints>
-            <point key="canvasLocation" x="490" y="413"/>
+            <point key="canvasLocation" x="390" y="408"/>
         </view>
     </objects>
 </document>

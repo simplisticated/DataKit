@@ -51,14 +51,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.makeKeyAndVisible()
         
         
-        // Switch to main flow
+        // Switch to waiting flow
         
-        let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
+        let waitingViewController = WaitingViewController(nibName: "WaitingViewController", bundle: nil)
         
-        let navigationController = UINavigationController(rootViewController: mainViewController)
-        navigationController.navigationBarHidden = true
+        let navigationController = UINavigationController(rootViewController: waitingViewController)
         
         window!.rootViewController = navigationController
+        
+        
+        
+        // Fill database
+        
+        InMemoryStorage.initializeStorage()
+        
+        let startTimestamp = NSDate().timeIntervalSince1970
+        
+        let dispatchGroup = dispatch_group_create()
+        
+        for i in 0..<20 {
+            dispatch_group_enter(dispatchGroup)
+            
+            let uniqueIdentifier = String(format: "user-%d", i)
+            
+            InMemoryStorage.getOrCreateObjectOfType(User.self, withUniqueIdentifier: uniqueIdentifier, andCompletion: { (object) in
+                if i % 2 == 0 {
+                    object.firstName = "John"
+                    object.lastName = "Appleseed"
+                } else {
+                    object.firstName = "Barack"
+                    object.lastName = "Obama"
+                }
+                
+                dispatch_group_leave(dispatchGroup)
+            })
+        }
+        
+        dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
+            let endTimestamp = NSDate().timeIntervalSince1970
+            let timeResult = endTimestamp - startTimestamp
+            NSLog("Filled database in %.3f seconds", timeResult)
+            
+            
+            // Switch to main flow
+            
+            let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
+            
+            let navigationController = UINavigationController(rootViewController: mainViewController)
+            
+            self.window!.rootViewController = navigationController
+        }
         
         
         // Return result
