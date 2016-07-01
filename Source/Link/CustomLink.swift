@@ -1,6 +1,6 @@
 //
 //  CustomLink.swift
-//  DataKitDemo
+//  DataKit
 //
 //  Created by Igor Matyushkin on 01.07.16.
 //  Copyright © 2016 Igor Matyushkin. All rights reserved.
