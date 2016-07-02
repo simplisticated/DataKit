@@ -1,5 +1,5 @@
 //
-//  CustomLink.swift
+//  Link.swift
 //  DataKit
 //
 //  Created by Igor Matyushkin on 01.07.16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CustomLink<ObjectClass where ObjectClass: Object> {
+public class Link<ObjectClass where ObjectClass: Object> {
     
     // MARK: Class variables & properties
     
@@ -33,7 +33,7 @@ public class CustomLink<ObjectClass where ObjectClass: Object> {
     
     // MARK: Public object methods
     
-    public func getObjectWithCompletion(completion: (object: ObjectClass?, error: NSError?) -> Void) {
+    public func getObjectWithCompletion(completion: (object: ObjectClass?, error: Error?) -> Void) {
     }
     
     
