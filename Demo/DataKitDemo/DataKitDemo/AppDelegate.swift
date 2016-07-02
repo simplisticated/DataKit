@@ -63,34 +63,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Fill database
         
-        InMemoryStorage.initializeStorage()
-        
         let startTimestamp = NSDate().timeIntervalSince1970
         
         let dispatchGroup = dispatch_group_create()
         
-        for i in 0..<20 {
-            dispatch_group_enter(dispatchGroup)
-            
-            let uniqueIdentifier = String(format: "user-%d", i)
-            
-            InMemoryStorage.getOrCreateObjectOfType(User.self, withUniqueIdentifier: uniqueIdentifier, andCompletion: { (object) in
-                if i % 2 == 0 {
-                    object.firstName = "John"
-                    object.lastName = "Appleseed"
-                } else {
-                    object.firstName = "Barack"
-                    object.lastName = "Obama"
-                }
+        dispatch_group_enter(dispatchGroup)
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
+            for i in 0..<2000 {
+                let uniqueIdentifier = String(format: "user-%d", i)
                 
-                dispatch_group_leave(dispatchGroup)
-            })
+                let user = InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstOrCreateSynchronouslyWithUniqueIdentifier(uniqueIdentifier)
+                
+                if i % 2 == 0 {
+                    user.firstName = "John"
+                    user.lastName = "Appleseed"
+                } else {
+                    user.firstName = "Barack"
+                    user.lastName = "Obama"
+                }
+            }
+            
+            dispatch_group_leave(dispatchGroup)
         }
         
         dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
             let endTimestamp = NSDate().timeIntervalSince1970
             let timeResult = endTimestamp - startTimestamp
             NSLog("Filled database in %.3f seconds", timeResult)
+            
+            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).numberOfAllObjectsWithCompletion({ (numberOfObjects) in
+                NSLog("Number of all objects: %d", numberOfObjects)
+            })
             
             
             // Switch to main flow

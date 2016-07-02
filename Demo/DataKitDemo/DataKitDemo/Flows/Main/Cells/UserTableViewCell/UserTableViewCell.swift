@@ -76,44 +76,21 @@ class UserTableViewCell: UITableViewCell {
             
             // Obtain user
             
-            InMemoryStorage.getOrCreateObjectOfType(User.self, withUniqueIdentifier: newValue!) { (object) in
+            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstAsynchronouslyWithUniqueIdentifier(newValue!) { (object) in
                 // Update first name label
                 
-                self.firstNameLabel.text = object.firstName ?? ""
+                self.firstNameLabel.text = object?.firstName ?? ""
                 
                 
                 // Update last name label
                 
-                self.lastNameLabel.text = object.lastName ?? ""
+                self.lastNameLabel.text = object?.lastName ?? ""
+                
+                
+                // Update user id label
+                
+                self.userIdLabel.text = object?.uniqueIdentifier ?? ""
             }
-        }
-    }
-    
-    private var _user: User?
-    
-    private var user: User? {
-        get {
-            return _user
-        }
-        set {
-            // Assertions for new value
-            
-            assert(newValue != nil, "User should not be nil")
-            
-            
-            // Update private variable
-            
-            _user = newValue
-            
-            
-            // Update first name label
-            
-            firstNameLabel.text = newValue!.firstName ?? ""
-            
-            
-            // Update last name label
-            
-            lastNameLabel.text = newValue!.lastName ?? ""
         }
     }
     
