@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69006A651D26914C000F9028 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A5C1D26914C000F9028 /* Link.swift */; };
+		69006A651D26914C000F9028 /* ObjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A5C1D26914C000F9028 /* ObjectLink.swift */; };
 		69006A671D26914C000F9028 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A5F1D26914C000F9028 /* Object.swift */; };
 		69006A681D26914C000F9028 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A611D26914C000F9028 /* Service.swift */; };
 		69006A6A1D26914C000F9028 /* BaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A641D26914C000F9028 /* BaseStorage.swift */; };
@@ -48,7 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		69006A5C1D26914C000F9028 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		69006A5C1D26914C000F9028 /* ObjectLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectLink.swift; sourceTree = "<group>"; };
 		69006A5F1D26914C000F9028 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
 		69006A611D26914C000F9028 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		69006A641D26914C000F9028 /* BaseStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorage.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 		69006A5B1D26914C000F9028 /* Link */ = {
 			isa = PBXGroup;
 			children = (
-				69006A5C1D26914C000F9028 /* Link.swift */,
+				69006A5C1D26914C000F9028 /* ObjectLink.swift */,
 			);
 			path = Link;
 			sourceTree = "<group>";
@@ -430,7 +430,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69006A651D26914C000F9028 /* Link.swift in Sources */,
+				69006A651D26914C000F9028 /* ObjectLink.swift in Sources */,
 				69006A681D26914C000F9028 /* Service.swift in Sources */,
 				69006A751D269723000F9028 /* WaitingViewController.swift in Sources */,
 				699CA8311D2827020015CC15 /* Error.swift in Sources */,
