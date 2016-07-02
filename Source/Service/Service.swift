@@ -15,16 +15,16 @@ public class Service: NSObject {
     
     // MARK: Public class methods
     
-    public class func getObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withUniqueIdentifier: String, andCompletion completion: ((object: ObjectClass?, error: NSError?) -> Void)?) {
+    public class func getObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withUniqueIdentifier: String, andCompletion completion: ((object: ObjectClass?, error: Error?) -> Void)?) {
     }
     
-    public class func createObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((object: ObjectClass?, error: NSError?) -> Void)?) {
+    public class func createObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((object: ObjectClass?, error: Error?) -> Void)?) {
     }
     
-    public class func updateObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((object: ObjectClass?, error: NSError?) -> Void)?) {
+    public class func updateObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((object: ObjectClass?, error: Error?) -> Void)?) {
     }
     
-    public class func deleteObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((error: NSError?) -> Void)?) {
+    public class func deleteObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((error: Error?) -> Void)?) {
     }
     
     
