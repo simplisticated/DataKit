@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SelectionPredicate<ObjectClass where ObjectClass: Object>: NSObject {
+public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObject {
     
     // MARK: Class variables & properties
     

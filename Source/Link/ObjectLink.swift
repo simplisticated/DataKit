@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ObjectLink<ObjectClass where ObjectClass: Object>: NSObject {
+public class ObjectLink<ObjectClass where ObjectClass: NSObject>: NSObject {
     
     // MARK: Class variables & properties
     

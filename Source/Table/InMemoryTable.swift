@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class InMemoryTable<ObjectClass where ObjectClass: Object>: NSObject {
+public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
     
     // MARK: Class variables & properties
     

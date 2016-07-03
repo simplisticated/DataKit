@@ -10,23 +10,23 @@ import UIKit
 
 internal protocol BaseStorage {
     
-    func numberOfAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void)
+    func numberOfAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void)
     
-    func numberOfObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (numberOfObjects: Int) -> Void)
+    func numberOfObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (numberOfObjects: Int) -> Void)
     
-    func findAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withCompletion completion: (objects: [ObjectClass]) -> Void)
+    func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (objects: [ObjectClass]) -> Void)
     
-    func findAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (objects: [ObjectClass]) -> Void)
+    func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (objects: [ObjectClass]) -> Void)
     
-    func findFirstObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (object: ObjectClass?) -> Void)
+    func findFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (object: ObjectClass?) -> Void)
     
-    func insertObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: (() -> Void)?)
+    func insertObject<ObjectClass where ObjectClass: NSObject>(object: ObjectClass, withCompletion completion: (() -> Void)?)
     
-    func deleteAllObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?)
+    func deleteAllObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?)
     
-    func deleteAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?)
+    func deleteAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?)
     
-    func deleteFirstObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((deleted: Bool) -> Void)?)
+    func deleteFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((deleted: Bool) -> Void)?)
     
 }
 
