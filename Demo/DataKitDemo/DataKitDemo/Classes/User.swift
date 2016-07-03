@@ -8,7 +8,7 @@
 
 import UIKit
 
-class User: Object {
+class User: NSObject {
     
     // MARK: Class variables & properties
     
@@ -29,6 +29,8 @@ class User: Object {
     
     
     // MARK: Object variables & properties
+    
+    var uniqueIdentifier: String?
     
     var firstName: String?
     

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		69006A651D26914C000F9028 /* ObjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A5C1D26914C000F9028 /* ObjectLink.swift */; };
-		69006A671D26914C000F9028 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A5F1D26914C000F9028 /* Object.swift */; };
 		69006A681D26914C000F9028 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A611D26914C000F9028 /* Service.swift */; };
 		69006A6A1D26914C000F9028 /* BaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A641D26914C000F9028 /* BaseStorage.swift */; };
 		69006A6C1D269554000F9028 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A6B1D269554000F9028 /* User.swift */; };
@@ -50,7 +49,6 @@
 
 /* Begin PBXFileReference section */
 		69006A5C1D26914C000F9028 /* ObjectLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectLink.swift; sourceTree = "<group>"; };
-		69006A5F1D26914C000F9028 /* Object.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
 		69006A611D26914C000F9028 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		69006A641D26914C000F9028 /* BaseStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorage.swift; sourceTree = "<group>"; };
 		69006A6B1D269554000F9028 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -110,14 +108,6 @@
 				69006A5C1D26914C000F9028 /* ObjectLink.swift */,
 			);
 			path = Link;
-			sourceTree = "<group>";
-		};
-		69006A5E1D26914C000F9028 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				69006A5F1D26914C000F9028 /* Object.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		69006A601D26914C000F9028 /* Service */ = {
@@ -247,7 +237,6 @@
 				69006A621D26914C000F9028 /* Storage */,
 				699CA84E1D28CAB10015CC15 /* Table */,
 				699CA8561D28CBE70015CC15 /* Predicate */,
-				69006A5E1D26914C000F9028 /* Model */,
 				69006A601D26914C000F9028 /* Service */,
 				699CA82F1D2826F60015CC15 /* Error */,
 				69006A5B1D26914C000F9028 /* Link */,
@@ -442,7 +431,6 @@
 				698B2EFA1D265DB9008CA3FA /* ViewController.swift in Sources */,
 				699CA8501D28CAB10015CC15 /* InMemoryTable.swift in Sources */,
 				69006A6A1D26914C000F9028 /* BaseStorage.swift in Sources */,
-				69006A671D26914C000F9028 /* Object.swift in Sources */,
 				699CA84D1D28CA9D0015CC15 /* InMemoryStorage.swift in Sources */,
 				69006A6C1D269554000F9028 /* User.swift in Sources */,
 				698B2EF81D265DB9008CA3FA /* AppDelegate.swift in Sources */,
