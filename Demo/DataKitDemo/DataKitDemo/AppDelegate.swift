@@ -63,46 +63,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Fill database
         
-        let startTimestamp = NSDate().timeIntervalSince1970
-        
-        let dispatchGroup = dispatch_group_create()
-        
-        for i in 0..<20000 {
-            dispatch_group_enter(dispatchGroup)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { 
+            let startTimestamp = NSDate().timeIntervalSince1970
             
-            let user = User()
-            user.uniqueIdentifier = String(format: "user-%d", i)
+            let dispatchGroup = dispatch_group_create()
             
-            if i % 2 == 0 {
-                user.firstName = "John"
-                user.lastName = "Appleseed"
-            } else {
-                user.firstName = "Barack"
-                user.lastName = "Obama"
+            for i in 0..<20000 {
+                dispatch_group_enter(dispatchGroup)
+                
+                let user = User()
+                user.uniqueIdentifier = String(format: "user-%d", i)
+                
+                if i % 2 == 0 {
+                    user.firstName = "John"
+                    user.lastName = "Appleseed"
+                } else {
+                    user.firstName = "Barack"
+                    user.lastName = "Obama"
+                }
+                
+                InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).insertObject(user, withCompletion: {
+                    dispatch_group_leave(dispatchGroup)
+                })
             }
             
-            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).insertObject(user, withCompletion: { 
-                dispatch_group_leave(dispatchGroup)
-            })
-        }
-        
-        dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
-            let endTimestamp = NSDate().timeIntervalSince1970
-            let timeResult = endTimestamp - startTimestamp
-            NSLog("Filled database in %.3f seconds", timeResult)
-            
-            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).numberOfAllObjectsWithCompletion({ (numberOfObjects) in
-                NSLog("Number of all objects: %d", numberOfObjects)
-            })
-            
-            
-            // Switch to main flow
-            
-            let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
-            
-            let navigationController = UINavigationController(rootViewController: mainViewController)
-            
-            self.window!.rootViewController = navigationController
+            dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
+                let endTimestamp = NSDate().timeIntervalSince1970
+                let timeResult = endTimestamp - startTimestamp
+                NSLog("Filled database in %.3f seconds", timeResult)
+                
+                InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).numberOfAllObjectsWithCompletion({ (numberOfObjects) in
+                    NSLog("Number of all objects: %d", numberOfObjects)
+                })
+                
+                
+                // Switch to main flow
+                
+                let mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
+                
+                let navigationController = UINavigationController(rootViewController: mainViewController)
+                
+                self.window!.rootViewController = navigationController
+            }
         }
         
         

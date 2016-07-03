@@ -56,7 +56,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Update number of users
         
-        InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).numberOfAllObjectsWithCompletion { (numberOfObjects) in
+        InMemoryStorage.defaultStorage().numberOfAllObjectsOfType(User.self) { (numberOfObjects) in
             self.numberOfUsers = numberOfObjects
             self.tableView.reloadData()
         }

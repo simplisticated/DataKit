@@ -76,22 +76,32 @@ class UserTableViewCell: UITableViewCell {
             
             // Obtain user
             
-            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstObjectWithPredicate(SelectionPredicate<User>(block: { (object) -> Bool in
+            let startTimestamp = NSDate().timeIntervalSince1970
+            
+            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstObjectWithPredicateBlock({ (object) -> Bool in
                 return object.uniqueIdentifier == newValue
-            })) { (object) in
-                // Update first name label
-                
-                self.firstNameLabel.text = object?.firstName ?? ""
-                
-                
-                // Update last name label
-                
-                self.lastNameLabel.text = object?.lastName ?? ""
-                
-                
-                // Update user id label
-                
-                self.userIdLabel.text = object?.uniqueIdentifier ?? ""
+                }) { (object) in
+                    // Update first name label
+                    
+                    self.firstNameLabel.text = object?.firstName ?? ""
+                    
+                    
+                    // Update last name label
+                    
+                    self.lastNameLabel.text = object?.lastName ?? ""
+                    
+                    
+                    // Update user id label
+                    
+                    self.userIdLabel.text = object?.uniqueIdentifier ?? ""
+                    
+                    
+                    // Report time interval
+                    
+                    let endTimestamp = NSDate().timeIntervalSince1970
+                    let timeInterval = endTimestamp - startTimestamp
+                    
+                    NSLog("Selection finished in %f seconds", timeInterval)
             }
         }
     }
