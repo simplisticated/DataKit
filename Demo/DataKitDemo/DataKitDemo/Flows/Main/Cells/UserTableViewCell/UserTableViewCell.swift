@@ -76,7 +76,9 @@ class UserTableViewCell: UITableViewCell {
             
             // Obtain user
             
-            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstAsynchronouslyWithUniqueIdentifier(newValue!) { (object) in
+            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstObjectWithPredicate(SelectionPredicate<User>(block: { (object) -> Bool in
+                return object.uniqueIdentifier == newValue
+            })) { (object) in
                 // Update first name label
                 
                 self.firstNameLabel.text = object?.firstName ?? ""

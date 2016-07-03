@@ -25,9 +25,10 @@
 		698B2F181D265DB9008CA3FA /* DataKitDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F171D265DB9008CA3FA /* DataKitDemoUITests.swift */; };
 		698B2F2E1D265E18008CA3FA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B2F2C1D265E18008CA3FA /* MainViewController.swift */; };
 		698B2F2F1D265E18008CA3FA /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 698B2F2D1D265E18008CA3FA /* MainViewController.xib */; };
-		699CA82C1D280C5B0015CC15 /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CA82B1D280C5B0015CC15 /* InMemoryStorage.swift */; };
-		699CA82E1D280C6A0015CC15 /* InMemoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CA82D1D280C6A0015CC15 /* InMemoryTable.swift */; };
 		699CA8311D2827020015CC15 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CA8301D2827020015CC15 /* Error.swift */; };
+		699CA84D1D28CA9D0015CC15 /* InMemoryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CA84C1D28CA9D0015CC15 /* InMemoryStorage.swift */; };
+		699CA8501D28CAB10015CC15 /* InMemoryTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CA84F1D28CAB10015CC15 /* InMemoryTable.swift */; };
+		699CA8581D28CBF30015CC15 /* SelectionPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699CA8571D28CBF30015CC15 /* SelectionPredicate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,9 +73,10 @@
 		698B2F191D265DB9008CA3FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		698B2F2C1D265E18008CA3FA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		698B2F2D1D265E18008CA3FA /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
-		699CA82B1D280C5B0015CC15 /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
-		699CA82D1D280C6A0015CC15 /* InMemoryTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryTable.swift; sourceTree = "<group>"; };
 		699CA8301D2827020015CC15 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		699CA84C1D28CA9D0015CC15 /* InMemoryStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryStorage.swift; sourceTree = "<group>"; };
+		699CA84F1D28CAB10015CC15 /* InMemoryTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryTable.swift; sourceTree = "<group>"; };
+		699CA8571D28CBF30015CC15 /* SelectionPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionPredicate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				69006A641D26914C000F9028 /* BaseStorage.swift */,
+				699CA84C1D28CA9D0015CC15 /* InMemoryStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -241,12 +244,13 @@
 		698B2F291D265DF0008CA3FA /* DataKit */ = {
 			isa = PBXGroup;
 			children = (
-				699CA82F1D2826F60015CC15 /* Error */,
-				69006A5E1D26914C000F9028 /* Model */,
 				69006A621D26914C000F9028 /* Storage */,
+				699CA84E1D28CAB10015CC15 /* Table */,
+				699CA8561D28CBE70015CC15 /* Predicate */,
+				69006A5E1D26914C000F9028 /* Model */,
 				69006A601D26914C000F9028 /* Service */,
+				699CA82F1D2826F60015CC15 /* Error */,
 				69006A5B1D26914C000F9028 /* Link */,
-				699CA8291D280C5B0015CC15 /* DatabaseImplementations */,
 			);
 			name = DataKit;
 			path = ../../../../Source;
@@ -271,29 +275,28 @@
 			path = MainViewController;
 			sourceTree = "<group>";
 		};
-		699CA8291D280C5B0015CC15 /* DatabaseImplementations */ = {
-			isa = PBXGroup;
-			children = (
-				699CA82A1D280C5B0015CC15 /* InMemory */,
-			);
-			path = DatabaseImplementations;
-			sourceTree = "<group>";
-		};
-		699CA82A1D280C5B0015CC15 /* InMemory */ = {
-			isa = PBXGroup;
-			children = (
-				699CA82B1D280C5B0015CC15 /* InMemoryStorage.swift */,
-				699CA82D1D280C6A0015CC15 /* InMemoryTable.swift */,
-			);
-			path = InMemory;
-			sourceTree = "<group>";
-		};
 		699CA82F1D2826F60015CC15 /* Error */ = {
 			isa = PBXGroup;
 			children = (
 				699CA8301D2827020015CC15 /* Error.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		699CA84E1D28CAB10015CC15 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				699CA84F1D28CAB10015CC15 /* InMemoryTable.swift */,
+			);
+			path = Table;
+			sourceTree = "<group>";
+		};
+		699CA8561D28CBE70015CC15 /* Predicate */ = {
+			isa = PBXGroup;
+			children = (
+				699CA8571D28CBF30015CC15 /* SelectionPredicate.swift */,
+			);
+			path = Predicate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,12 +440,13 @@
 				698B2F2E1D265E18008CA3FA /* MainViewController.swift in Sources */,
 				69006A7B1D2699A9000F9028 /* UserTableViewCell.swift in Sources */,
 				698B2EFA1D265DB9008CA3FA /* ViewController.swift in Sources */,
-				699CA82E1D280C6A0015CC15 /* InMemoryTable.swift in Sources */,
+				699CA8501D28CAB10015CC15 /* InMemoryTable.swift in Sources */,
 				69006A6A1D26914C000F9028 /* BaseStorage.swift in Sources */,
 				69006A671D26914C000F9028 /* Object.swift in Sources */,
-				699CA82C1D280C5B0015CC15 /* InMemoryStorage.swift in Sources */,
+				699CA84D1D28CA9D0015CC15 /* InMemoryStorage.swift in Sources */,
 				69006A6C1D269554000F9028 /* User.swift in Sources */,
 				698B2EF81D265DB9008CA3FA /* AppDelegate.swift in Sources */,
+				699CA8581D28CBF30015CC15 /* SelectionPredicate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

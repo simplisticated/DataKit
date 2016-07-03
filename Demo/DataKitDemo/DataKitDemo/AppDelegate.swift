@@ -67,24 +67,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let dispatchGroup = dispatch_group_create()
         
-        dispatch_group_enter(dispatchGroup)
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
-            for i in 0..<2000 {
-                let uniqueIdentifier = String(format: "user-%d", i)
-                
-                let user = InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstOrCreateSynchronouslyWithUniqueIdentifier(uniqueIdentifier)
-                
-                if i % 2 == 0 {
-                    user.firstName = "John"
-                    user.lastName = "Appleseed"
-                } else {
-                    user.firstName = "Barack"
-                    user.lastName = "Obama"
-                }
+        for i in 0..<20000 {
+            dispatch_group_enter(dispatchGroup)
+            
+            let user = User()
+            user.uniqueIdentifier = String(format: "user-%d", i)
+            
+            if i % 2 == 0 {
+                user.firstName = "John"
+                user.lastName = "Appleseed"
+            } else {
+                user.firstName = "Barack"
+                user.lastName = "Obama"
             }
             
-            dispatch_group_leave(dispatchGroup)
+            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).insertObject(user, withCompletion: { 
+                dispatch_group_leave(dispatchGroup)
+            })
         }
         
         dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
