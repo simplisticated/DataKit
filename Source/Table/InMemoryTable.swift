@@ -106,6 +106,17 @@ public class InMemoryTable<ObjectClass where ObjectClass: Object>: NSObject {
         }
     }
     
+    public func findAllObjectsWithCompletion(completion: (objects: [ObjectClass]) -> Void) {
+        runOnOperationQueue { 
+            var allObjects = [ObjectClass]()
+            allObjects.appendContentsOf(self.objects)
+            
+            self.runOnResponseQueue({ 
+                completion(objects: allObjects)
+            })
+        }
+    }
+    
     public func findAllObjectsWithPredicate(predicate: SelectionPredicate<ObjectClass>, andCompletion completion: (objects: [ObjectClass]) -> Void) {
         runOnOperationQueue {
             var resultObjects = [ObjectClass]()
@@ -153,6 +164,17 @@ public class InMemoryTable<ObjectClass where ObjectClass: Object>: NSObject {
             
             self.runOnResponseQueue({ 
                 completion?()
+            })
+        }
+    }
+    
+    public func deleteAllObjectWithCompletion(completion: ((numberOfDeletedObjects: Int) -> Void)?) {
+        runOnOperationQueue {
+            let numberOfObjectsToDelete = self.objects.count
+            self._objects.removeAll(keepCapacity: false)
+            
+            self.runOnResponseQueue({
+                completion?(numberOfDeletedObjects: numberOfObjectsToDelete)
             })
         }
     }
