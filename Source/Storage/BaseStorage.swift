@@ -8,23 +8,25 @@
 
 import UIKit
 
-public protocol BaseStorage {
+internal protocol BaseStorage {
     
-    func initializeStorage()
+    func numberOfAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withCompletion completion: (numberOfObjects: Int) -> Void)
     
-    func getObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withUniqueIdentifier uniqueIdentifier: String, andCompletion completion: (object: ObjectClass?) -> Void)
+    func numberOfObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withPredicate predicate: SelectionPredicate<ObjectClass>, andCompletion completion: (numberOfObjects: Int) -> Void)
     
-    func getOrCreateObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withUniqueIdentifier uniqueIdentifier: String, andCompletion completion: ((object: ObjectClass) -> Void)?)
+    func findAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withCompletion completion: (objects: [ObjectClass]) -> Void)
     
-    func updateObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: ((object: ObjectClass) -> Void)?)
+    func findAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withPredicate predicate: SelectionPredicate<ObjectClass>, andCompletion completion: (objects: [ObjectClass]) -> Void)
     
-    func deleteObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withUniqueIdentifier uniqueIdentifier: String, andCompletion completion: (() -> Void)?)
+    func findFirstObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withPredicate predicate: SelectionPredicate<ObjectClass>, andCompletion completion: (object: ObjectClass?) -> Void)
     
-    func numberOfAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void)
+    func insertObject<ObjectClass where ObjectClass: Object>(object: ObjectClass, withCompletion completion: (() -> Void)?)
     
-    func numberOfObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, satisfyingRequirementsOfPredicate predicate: ((object: ObjectClass) -> Bool), withCompletion completion: (numberOfObjects: Int) -> Void)
+    func deleteAllObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?)
     
-    func selectObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass.Type, withBlockPredicate predicate: ((object: ObjectClass) -> Bool), andCompletion completion: (objects: [ObjectClass]) -> Void)
+    func deleteAllObjectsOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withPredicate predicate: SelectionPredicate<ObjectClass>, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?)
+    
+    func deleteFirstObjectOfType<ObjectClass where ObjectClass: Object>(type: ObjectClass, withPredicate predicate: SelectionPredicate<ObjectClass>, andCompletion completion: ((deleted: Bool) -> Void)?)
     
 }
 
