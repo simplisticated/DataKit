@@ -44,7 +44,7 @@ public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObje
     
     // MARK: Public object methods
     
-    func evaluateObject(object: ObjectClass) -> Bool {
+    func evaluateWithObject(object: ObjectClass) -> Bool {
         let result = predicateBlock(object: object)
         return result
     }

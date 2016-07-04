@@ -52,49 +52,103 @@ public class InMemoryStorage: NSObject, BaseStorage {
     
     // MARK: Public object methods
     
-    public func numberOfAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void) {
+    public func numberOfAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.numberOfAllObjectsWithCompletion(completion)
+        return self
     }
     
-    public func numberOfObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (numberOfObjects: Int) -> Void) {
+    public func numberOfObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (numberOfObjects: Int) -> Void) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.numberOfObjectsWithPredicateBlock(predicateBlock, andCompletion: completion)
+        return self
     }
     
-    public func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (objects: [ObjectClass]) -> Void) {
+    public func numberOfObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, meetingCondition condition: String, andCompletion completion: (numberOfObjects: Int) -> Void) -> Self {
+        let table = tableForObjectWithType(ObjectClass)
+        table.numberOfObjectsMeetingCondition(condition, andCompletion: completion)
+        return self
+    }
+    
+    public func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (objects: [ObjectClass]) -> Void) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.findAllObjectsWithCompletion(completion)
+        return self
     }
     
-    public func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (objects: [ObjectClass]) -> Void) {
+    public func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (objects: [ObjectClass]) -> Void) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.findAllObjectsWithPredicateBlock(predicateBlock, andCompletion: completion)
+        return self
     }
     
-    public func findFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (object: ObjectClass?) -> Void) {
+    public func findAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, meetingCondition condition: String, andCompletion completion: (objects: [ObjectClass]) -> Void) -> Self {
+        let table = tableForObjectWithType(ObjectClass)
+        table.findAllObjectsMeetingCondition(condition, andCompletion: completion)
+        return self
+    }
+    
+    public func findFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (object: ObjectClass?) -> Void) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.findFirstObjectWithPredicateBlock(predicateBlock, andCompletion: completion)
+        return self
     }
     
-    public func insertObject<ObjectClass where ObjectClass: NSObject>(object: ObjectClass, withCompletion completion: (() -> Void)?) {
+    public func findFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, meetingCondition condition: String, andCompletion completion: (object: ObjectClass?) -> Void) -> Self {
+        let table = tableForObjectWithType(ObjectClass)
+        table.findFirstObjectMeetingCondition(condition, andCompletion: completion)
+        return self
+    }
+    
+    public func insertObject<ObjectClass where ObjectClass: NSObject>(object: ObjectClass, withCompletion completion: (() -> Void)?) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.insertObject(object, withCompletion: completion)
+        return self
     }
     
-    public func deleteAllObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) {
+    /**
+    This method does nothing for in-memory storage
+    since no special operation is required to save
+    updated object.
+    */
+    public func update<ObjectClass where ObjectClass: NSObject>(object object: ObjectClass, withCompletion completion: (() -> Void)?) -> Self {
+        return self
+    }
+    
+    public func deleteAllObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.deleteAllObjectWithCompletion(completion)
+        return self
     }
     
-    public func deleteAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) {
+    public func deleteAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.deleteAllObjectsWithPredicateBlock(predicateBlock, andCompletion: completion)
+        return self
     }
     
-    public func deleteFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((deleted: Bool) -> Void)?) {
+    public func deleteAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, meetingCondition condition: String, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
+        let table = tableForObjectWithType(ObjectClass)
+        table.deleteAllObjectsMeetingCondition(condition, andCompletion: completion)
+        return self
+    }
+    
+    public func deleteFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withPredicateBlock predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((deleted: Bool) -> Void)?) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.deleteFirstObjectWithPredicateBlock(predicateBlock, andCompletion: completion)
+        return self
+    }
+    
+    public func deleteFirstObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, meetingCondition condition: String, andCompletion completion: ((deleted: Bool) -> Void)?) -> Self {
+        let table = tableForObjectWithType(ObjectClass)
+        table.deleteFirstObjectMeetingCondition(condition, andCompletion: completion)
+        return self
+    }
+    
+    func clearStorageWithCompletion(completion: (() -> Void)?) -> Self {
+        tables.removeAll(keepCapacity: false)
+        completion?()
+        return self
     }
     
     public func tableForObjectWithType<ObjectClass where ObjectClass: NSObject>(objectType: ObjectClass.Type) -> InMemoryTable<ObjectClass> {
