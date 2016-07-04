@@ -21,7 +21,7 @@ public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObje
     
     // MARK: Initializers
     
-    init(block: (object: ObjectClass) -> Bool) {
+    public init(block: (object: ObjectClass) -> Bool) {
         super.init()
         
         
@@ -44,7 +44,7 @@ public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObje
     
     // MARK: Public object methods
     
-    func evaluateWithObject(object: ObjectClass) -> Bool {
+    public func evaluateWithObject(object: ObjectClass) -> Bool {
         let result = predicateBlock(object: object)
         return result
     }
