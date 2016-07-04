@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		69006A651D26914C000F9028 /* ObjectLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A5C1D26914C000F9028 /* ObjectLink.swift */; };
-		69006A681D26914C000F9028 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A611D26914C000F9028 /* Service.swift */; };
 		69006A6A1D26914C000F9028 /* BaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A641D26914C000F9028 /* BaseStorage.swift */; };
 		69006A6C1D269554000F9028 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A6B1D269554000F9028 /* User.swift */; };
 		69006A751D269723000F9028 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69006A731D269723000F9028 /* WaitingViewController.swift */; };
@@ -49,7 +48,6 @@
 
 /* Begin PBXFileReference section */
 		69006A5C1D26914C000F9028 /* ObjectLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectLink.swift; sourceTree = "<group>"; };
-		69006A611D26914C000F9028 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		69006A641D26914C000F9028 /* BaseStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseStorage.swift; sourceTree = "<group>"; };
 		69006A6B1D269554000F9028 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		69006A731D269723000F9028 /* WaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
@@ -108,14 +106,6 @@
 				69006A5C1D26914C000F9028 /* ObjectLink.swift */,
 			);
 			path = Link;
-			sourceTree = "<group>";
-		};
-		69006A601D26914C000F9028 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				69006A611D26914C000F9028 /* Service.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		69006A621D26914C000F9028 /* Storage */ = {
@@ -237,7 +227,6 @@
 				69006A621D26914C000F9028 /* Storage */,
 				699CA84E1D28CAB10015CC15 /* Table */,
 				699CA8561D28CBE70015CC15 /* Predicate */,
-				69006A601D26914C000F9028 /* Service */,
 				699CA82F1D2826F60015CC15 /* Error */,
 				69006A5B1D26914C000F9028 /* Link */,
 			);
@@ -423,7 +412,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69006A651D26914C000F9028 /* ObjectLink.swift in Sources */,
-				69006A681D26914C000F9028 /* Service.swift in Sources */,
 				69006A751D269723000F9028 /* WaitingViewController.swift in Sources */,
 				699CA8311D2827020015CC15 /* Error.swift in Sources */,
 				698B2F2E1D265E18008CA3FA /* MainViewController.swift in Sources */,
