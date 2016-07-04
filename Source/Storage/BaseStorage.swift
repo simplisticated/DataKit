@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal protocol BaseStorage {
+public protocol BaseStorage {
     
     func numberOfAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void) -> Self
     

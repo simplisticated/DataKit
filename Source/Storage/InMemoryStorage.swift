@@ -145,7 +145,7 @@ public class InMemoryStorage: NSObject, BaseStorage {
         return self
     }
     
-    func clearStorageWithCompletion(completion: (() -> Void)?) -> Self {
+    public func clearStorageWithCompletion(completion: (() -> Void)?) -> Self {
         tables.removeAll(keepCapacity: false)
         completion?()
         return self
