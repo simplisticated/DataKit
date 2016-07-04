@@ -59,6 +59,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         InMemoryStorage.defaultStorage().numberOfAllObjectsOfType(User.self) { (numberOfObjects) in
             self.numberOfUsers = numberOfObjects
             self.tableView.reloadData()
+        }.numberOfObjectsOfType(User.self, meetingCondition: "firstName == 'John'") { (numberOfObjects) in
+            NSLog("Number of users with name John = %d", numberOfObjects)
         }
     }
     
