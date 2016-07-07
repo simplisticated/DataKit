@@ -52,6 +52,25 @@ public class InMemoryStorage: NSObject, BaseStorage {
     
     // MARK: Public object methods
     
+    public func tableForObjectWithType<ObjectClass where ObjectClass: NSObject>(objectType: ObjectClass.Type) -> InMemoryTable<ObjectClass> {
+        let objectClassName = NSStringFromClass(ObjectClass)
+        
+        var tableForSpecifiedClass = tables[objectClassName] as? InMemoryTable<ObjectClass>
+        
+        if tableForSpecifiedClass == nil {
+            tableForSpecifiedClass = InMemoryTable<ObjectClass>()
+            tables[objectClassName] = tableForSpecifiedClass
+        }
+        
+        return tableForSpecifiedClass!
+    }
+    
+    
+    // MARK: Private object methods
+    
+    
+    // MARK: Protocol methods
+    
     public func numberOfAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: (numberOfObjects: Int) -> Void) -> Self {
         let table = tableForObjectWithType(ObjectClass)
         table.numberOfAllObjectsWithCompletion(completion)
@@ -111,13 +130,13 @@ public class InMemoryStorage: NSObject, BaseStorage {
     since no special operation is required to save
     updated object.
     */
-    public func update<ObjectClass where ObjectClass: NSObject>(object object: ObjectClass, withCompletion completion: (() -> Void)?) -> Self {
+    public func updateObject<ObjectClass where ObjectClass: NSObject>(object: ObjectClass, withCompletion completion: (() -> Void)?) -> Self {
         return self
     }
     
-    public func deleteAllObjectOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
+    public func deleteAllObjectsOfType<ObjectClass where ObjectClass: NSObject>(type: ObjectClass.Type, withCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
         let table = tableForObjectWithType(ObjectClass)
-        table.deleteAllObjectWithCompletion(completion)
+        table.deleteAllObjectsWithCompletion(completion)
         return self
     }
     
@@ -150,24 +169,5 @@ public class InMemoryStorage: NSObject, BaseStorage {
         completion?()
         return self
     }
-    
-    public func tableForObjectWithType<ObjectClass where ObjectClass: NSObject>(objectType: ObjectClass.Type) -> InMemoryTable<ObjectClass> {
-        let objectClassName = NSStringFromClass(ObjectClass)
-        
-        var tableForSpecifiedClass = tables[objectClassName] as? InMemoryTable<ObjectClass>
-        
-        if tableForSpecifiedClass == nil {
-            tableForSpecifiedClass = InMemoryTable<ObjectClass>()
-            tables[objectClassName] = tableForSpecifiedClass
-        }
-        
-        return tableForSpecifiedClass!
-    }
-    
-    
-    // MARK: Private object methods
-    
-    
-    // MARK: Protocol methods
     
 }
