@@ -131,6 +131,7 @@ public class InMemoryStorage: NSObject, BaseStorage {
     updated object.
     */
     public func updateObject<ObjectClass where ObjectClass: NSObject>(object: ObjectClass, withCompletion completion: (() -> Void)?) -> Self {
+        completion?()
         return self
     }
     

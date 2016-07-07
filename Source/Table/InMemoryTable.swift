@@ -168,7 +168,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return self
     }
     
-    public func findAllObjectsSynchronouslyWithCompletion() -> [ObjectClass] {
+    public func findAllObjectsSynchronously() -> [ObjectClass] {
         var allObjects = [ObjectClass]()
         allObjects.appendContentsOf(self.objects)
         return allObjects
