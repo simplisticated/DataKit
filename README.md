@@ -11,7 +11,24 @@
 3. **Be relational.** You can work with classes like with tables in SQL database. No more to say here.
 4. **Self-learning.** Yes, `DataKit` has a self-learning algorithm. More requests to database you make, faster you get results.
 
-**Documentation and framework are currently in development. Will be published soon :)**
+# How To Get Started
+
+- Copy content of `Source` folder to your project.
+
+or
+
+- Use `DataKit` cocoapod
+
+# Requirements
+
+* iOS 8 and later
+* Xcode 7 and later
+
+# Usage
+
+`DataKit` is designed to work with any types of data subclassed from `NSObject`.
+
+**More documentation will be published very soon...**
 
 # License
 
