@@ -339,11 +339,13 @@
 					};
 					698B2F071D265DB9008CA3FA = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = AFEG59EG8E;
 						LastSwiftMigration = 0800;
 						TestTargetID = 698B2EF31D265DB9008CA3FA;
 					};
 					698B2F121D265DB9008CA3FA = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = AFEG59EG8E;
 						LastSwiftMigration = 0800;
 						TestTargetID = 698B2EF31D265DB9008CA3FA;
 					};
@@ -584,6 +586,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = AFEG59EG8E;
 				INFOPLIST_FILE = DataKitDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.visuality.DataKitDemoTests;
@@ -597,6 +600,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = AFEG59EG8E;
 				INFOPLIST_FILE = DataKitDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.visuality.DataKitDemoTests;
@@ -609,6 +613,7 @@
 		698B2F231D265DB9008CA3FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = AFEG59EG8E;
 				INFOPLIST_FILE = DataKitDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.visuality.DataKitDemoUITests;
@@ -621,6 +626,7 @@
 		698B2F241D265DB9008CA3FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = AFEG59EG8E;
 				INFOPLIST_FILE = DataKitDemoUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.visuality.DataKitDemoUITests;
