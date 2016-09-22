@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DataKit"
-  s.version      = "0.2.2"
+  s.version      = "3.0"
   s.summary      = "Incredibly fast in-memory database for iOS."
 
   # This description is used to generate tags and improve search results.
@@ -65,7 +65,7 @@ Extremely fast in-memory database for iOS with intuitive and powerful internal l
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "9.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -91,7 +91,7 @@ Extremely fast in-memory database for iOS with intuitive and powerful internal l
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Source", "Source/**/*"
+  s.source_files  = "DataKit", "DataKit/**/*"
   #s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
