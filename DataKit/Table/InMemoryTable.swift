@@ -610,18 +610,6 @@ public class InMemoryTable<ObjectClass: NSObject>: NSObject {
         return nil
     }
     
-    private func runOnOperationQueue(block: () -> Void) {
-        operationQueue.sync {
-            block()
-        }
-    }
-    
-    private func runOnResponseQueue(block: () -> Void) {
-        responseQueue.sync {
-            block()
-        }
-    }
-    
     private func moveObjectFromIndex(currentIndex: Int, toIndex newIndex: Int) {
         let objectToMove = _objects[currentIndex]
         
@@ -631,6 +619,18 @@ public class InMemoryTable<ObjectClass: NSObject>: NSObject {
             _objects.append(objectToMove)
         } else {
             _objects.insert(objectToMove, at: newIndex)
+        }
+    }
+    
+    private func runOnOperationQueue(block: @escaping () -> Void) {
+        operationQueue.sync {
+            block()
+        }
+    }
+    
+    private func runOnResponseQueue(block: @escaping () -> Void) {
+        responseQueue.async { 
+            block()
         }
     }
     
