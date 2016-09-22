@@ -32,9 +32,8 @@ public class InMemoryTable<ObjectClass: NSObject>: NSObject {
         
         // Initialize operation queue
         
-        //let nameForOperationQueue = String(format: "Operation queue for %@ table", NSStringFromClass(ObjectClass.self))
-        //_operationQueue = DispatchQueue(label: nameForOperationQueue, qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
-        _operationQueue = DispatchQueue.global(qos: .background)
+        let nameForOperationQueue = String(format: "Operation queue for %@ table", NSStringFromClass(ObjectClass.self))
+        _operationQueue = DispatchQueue(label: nameForOperationQueue)
         
         
         // Initialize response queue
@@ -623,7 +622,7 @@ public class InMemoryTable<ObjectClass: NSObject>: NSObject {
     }
     
     private func runOnOperationQueue(block: @escaping () -> Void) {
-        operationQueue.sync {
+        operationQueue.async {
             block()
         }
     }
