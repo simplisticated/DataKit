@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Fill database
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global().async {
             let startTimestamp = Date().timeIntervalSince1970
             
             let dispatchGroup = DispatchGroup()
