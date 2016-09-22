@@ -2,6 +2,13 @@
 <img src="https://github.com/igormatyushkin014/DataKit/blob/master/Images/logo-1024-300.png" alt="DataKit" title="DataKit">
 </p>
 
+<p align="center">
+<a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat"></a>
+<a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/v/DataKit.svg?maxAge=2592000"></a>
+<a href="https://cocoapods.org"><img src="https://img.shields.io/cocoapods/dt/DataKit.svg?maxAge=2592000"></a>
+<a href="https://tldrlegal.com/license/mit-license"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat"></a>
+</p>
+
 # At a Glance
 
 `DataKit` is an extremely fast in-memory database with intuitive and powerful internal language. It's developed with keeping in mind main troubles that iOS developer encounter with traditional databases like CoreData. To simplify development process, `DataKit` is based on several axioms:
@@ -13,11 +20,13 @@
 
 # How To Get Started
 
-- Copy content of `Source` folder to your project.
+- Copy content of `DataKit` folder to your project.
 
 or
 
 - Use `DataKit` cocoapod
+
+**Note**: For Swift 2.x use `DataKit v0.2.2`. For Swift 3.0 use `DataKit v3.0`.
 
 # Requirements
 
