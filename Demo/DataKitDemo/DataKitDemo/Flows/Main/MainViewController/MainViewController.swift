@@ -30,12 +30,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: Outlets
     
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var tableView: UITableView!
     
     
     // MARK: Object variables & properties
     
-    private var numberOfUsers = 0
+    fileprivate var numberOfUsers = 0
     
     
     // MARK: Public object methods
@@ -48,7 +48,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let nibForUserTableViewCell = UINib(nibName: "UserTableViewCell", bundle: nil)
         let reuseIdentifierForUserTableViewCell = UserTableViewCell.reuseIdentifier()
-        tableView.registerNib(nibForUserTableViewCell, forCellReuseIdentifier: reuseIdentifierForUserTableViewCell)
+        tableView.register(nibForUserTableViewCell, forCellReuseIdentifier: reuseIdentifierForUserTableViewCell)
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -56,12 +56,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Update number of users
         
-        InMemoryStorage.defaultStorage().numberOfAllObjectsOfType(User.self) { (numberOfObjects) in
+        InMemoryStorage.defaultStorage().numberOfAllObjectsOfType(type: User.self) { (numberOfObjects) in
             self.numberOfUsers = numberOfObjects
             self.tableView.reloadData()
-        }.numberOfObjectsOfType(User.self, meetingCondition: "firstName == 'John'") { (numberOfObjects) in
+        }.numberOfObjectsOfType(type: User.self, meetingCondition: "firstName == 'John", andCompletion: { (numberOfObjects) in
             NSLog("Number of users with name John = %d", numberOfObjects)
-        }
+        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,45 +78,45 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: Protocol methods
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return nil
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfUsers
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(UserTableViewCell.reuseIdentifier()) as! UserTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier()) as! UserTableViewCell
         
-        let userUniqueIdentifier = String(format: "user-%d", indexPath.row)
+        let userUniqueIdentifier = String(format: "user-%d", (indexPath as NSIndexPath).row)
         cell.userUniqueIdentifier = userUniqueIdentifier
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UserTableViewCell.heightForUser(nil)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
 }

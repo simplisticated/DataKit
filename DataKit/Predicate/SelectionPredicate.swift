@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObject {
+public class SelectionPredicate<ObjectClass: NSObject>: NSObject {
     
     // MARK: Class variables & properties
     
@@ -21,7 +21,7 @@ public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObje
     
     // MARK: Initializers
     
-    public init(block: (object: ObjectClass) -> Bool) {
+    public init(block: @escaping (_ object: ObjectClass) -> Bool) {
         super.init()
         
         
@@ -39,13 +39,13 @@ public class SelectionPredicate<ObjectClass where ObjectClass: NSObject>: NSObje
     
     // MARK: Object variables & properties
     
-    private var predicateBlock: ((object: ObjectClass) -> Bool)!
+    private var predicateBlock: ((_ object: ObjectClass) -> Bool)!
     
     
     // MARK: Public object methods
     
     public func evaluateWithObject(object: ObjectClass) -> Bool {
-        let result = predicateBlock(object: object)
+        let result = predicateBlock(object)
         return result
     }
     

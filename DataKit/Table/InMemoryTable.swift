@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
+public class InMemoryTable<ObjectClass: NSObject>: NSObject {
     
     // MARK: Class variables & properties
     
@@ -32,13 +32,14 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         
         // Initialize operation queue
         
-        let nameForOperationQueue = String(format: "Operation queue for %@ table", NSStringFromClass(ObjectClass))
-        _operationQueue = dispatch_queue_create(nameForOperationQueue, DISPATCH_QUEUE_SERIAL)
+        //let nameForOperationQueue = String(format: "Operation queue for %@ table", NSStringFromClass(ObjectClass.self))
+        //_operationQueue = DispatchQueue(label: nameForOperationQueue, qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
+        _operationQueue = DispatchQueue.global(qos: .background)
         
         
         // Initialize response queue
         
-        _responseQueue = dispatch_get_main_queue()
+        _responseQueue = DispatchQueue.main
     }
     
     
@@ -58,17 +59,17 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         }
     }
     
-    private var _operationQueue: dispatch_queue_t!
+    private var _operationQueue: DispatchQueue!
     
-    private var operationQueue: dispatch_queue_t {
+    private var operationQueue: DispatchQueue {
         get {
             return _operationQueue
         }
     }
     
-    private var _responseQueue: dispatch_queue_t!
+    private var _responseQueue: DispatchQueue!
     
-    private var responseQueue: dispatch_queue_t {
+    private var responseQueue: DispatchQueue {
         get {
             return _responseQueue
         }
@@ -77,24 +78,27 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
     
     // MARK: Public object methods
     
-    public func numberOfAllObjectsWithCompletion(completion: (numberOfObjects: Int) -> Void) -> Self {
+    @discardableResult
+    public func numberOfAllObjectsWithCompletion(completion: @escaping (_ numberOfObjects: Int) -> Void) -> Self {
         runOnOperationQueue { 
             let numberOfObjects = self.objects.count
             
-            self.runOnResponseQueue({ 
-                completion(numberOfObjects: numberOfObjects)
+            self.runOnResponseQueue(block: {
+                completion(numberOfObjects)
             })
         }
         
         return self
     }
     
+    @discardableResult
     public func numberOfAllObjectsSynchronously() -> Int {
         let numberOfObjects = self.objects.count
         return numberOfObjects
     }
     
-    public func numberOfObjectsWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (numberOfObjects: Int) -> Void) -> Self {
+    @discardableResult
+    public func numberOfObjectsWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool, andCompletion completion: @escaping (_ numberOfObjects: Int) -> Void) -> Self {
         runOnOperationQueue {
             let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
             
@@ -104,20 +108,21 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
             for i in 0..<numberOfAllObjects {
                 let object = self.objects[i]
                 
-                if predicate.evaluateWithObject(object) {
+                if predicate.evaluateWithObject(object: object) {
                     numberOfObjectsSatisfyingPredicate += 1
                 }
             }
             
-            self.runOnResponseQueue({
-                completion(numberOfObjects: numberOfObjectsSatisfyingPredicate)
+            self.runOnResponseQueue(block: {
+                completion(numberOfObjectsSatisfyingPredicate)
             })
         }
         
         return self
     }
     
-    public func numberOfObjectsSynchronouslyWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool) -> Int {
+    @discardableResult
+    public func numberOfObjectsSynchronouslyWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool) -> Int {
         let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
         
         var numberOfObjectsSatisfyingPredicate = 0
@@ -126,7 +131,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfAllObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluateWithObject(object: object) {
                 numberOfObjectsSatisfyingPredicate += 1
             }
         }
@@ -134,47 +139,52 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return numberOfObjectsSatisfyingPredicate
     }
     
-    public func numberOfObjectsMeetingCondition(condition: String, andCompletion completion: (numberOfObjects: Int) -> Void) -> Self {
+    @discardableResult
+    public func numberOfObjectsMeetingCondition(condition: String, andCompletion completion: @escaping (_ numberOfObjects: Int) -> Void) -> Self {
         runOnOperationQueue {
             let predicate = NSPredicate(format: condition)
-            let objects = (self.objects as NSArray).filteredArrayUsingPredicate(predicate) as! [ObjectClass]
+            let objects = (self.objects as NSArray).filtered(using: predicate) as! [ObjectClass]
             let numberOfObjectsSatisfyingPredicate = objects.count
             
-            self.runOnResponseQueue({
-                completion(numberOfObjects: numberOfObjectsSatisfyingPredicate)
+            self.runOnResponseQueue(block: {
+                completion(numberOfObjectsSatisfyingPredicate)
             })
         }
         
         return self
     }
     
+    @discardableResult
     public func numberOfObjectsSynchronouslyMeetingCondition(condition: String) -> Int {
         let predicate = NSPredicate(format: condition)
-        let objects = (self.objects as NSArray).filteredArrayUsingPredicate(predicate) as! [ObjectClass]
+        let objects = (self.objects as NSArray).filtered(using: predicate) as! [ObjectClass]
         let numberOfObjectsSatisfyingPredicate = objects.count
         return numberOfObjectsSatisfyingPredicate
     }
     
-    public func findAllObjectsWithCompletion(completion: (objects: [ObjectClass]) -> Void) -> Self {
+    @discardableResult
+    public func findAllObjectsWithCompletion(completion: @escaping (_ objects: [ObjectClass]) -> Void) -> Self {
         runOnOperationQueue { 
             var allObjects = [ObjectClass]()
-            allObjects.appendContentsOf(self.objects)
+            allObjects.append(contentsOf: self.objects)
             
-            self.runOnResponseQueue({ 
-                completion(objects: allObjects)
+            self.runOnResponseQueue(block: { 
+                completion(allObjects)
             })
         }
         
         return self
     }
     
+    @discardableResult
     public func findAllObjectsSynchronously() -> [ObjectClass] {
         var allObjects = [ObjectClass]()
-        allObjects.appendContentsOf(self.objects)
+        allObjects.append(contentsOf: self.objects)
         return allObjects
     }
     
-    public func findAllObjectsWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (objects: [ObjectClass]) -> Void) -> Self {
+    @discardableResult
+    public func findAllObjectsWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool, andCompletion completion: @escaping (_ objects: [ObjectClass]) -> Void) -> Self {
         runOnOperationQueue {
             let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
             
@@ -184,20 +194,21 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
             for i in 0..<numberOfObjects {
                 let object = self.objects[i]
                 
-                if predicate.evaluateWithObject(object) {
+                if predicate.evaluateWithObject(object: object) {
                     resultObjects.append(object)
                 }
             }
             
-            self.runOnResponseQueue({ 
-                completion(objects: resultObjects)
+            self.runOnResponseQueue(block: { 
+                completion(resultObjects)
             })
         }
         
         return self
     }
     
-    public func findAllObjectsSynchronouslyWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool) -> [ObjectClass] {
+    @discardableResult
+    public func findAllObjectsSynchronouslyWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool) -> [ObjectClass] {
         let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
         
         var resultObjects = [ObjectClass]()
@@ -206,7 +217,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluateWithObject(object: object) {
                 resultObjects.append(object)
             }
         }
@@ -214,7 +225,8 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return resultObjects
     }
     
-    public func findAllObjectsMeetingCondition(condition: String, andCompletion completion: (objects: [ObjectClass]) -> Void) -> Self {
+    @discardableResult
+    public func findAllObjectsMeetingCondition(condition: String, andCompletion completion: @escaping (_ objects: [ObjectClass]) -> Void) -> Self {
         runOnOperationQueue {
             let predicate = NSPredicate(format: condition)
             
@@ -224,19 +236,20 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
             for i in 0..<numberOfObjects {
                 let object = self.objects[i]
                 
-                if predicate.evaluateWithObject(object) {
+                if predicate.evaluate(with: object) {
                     resultObjects.append(object)
                 }
             }
             
-            self.runOnResponseQueue({
-                completion(objects: resultObjects)
+            self.runOnResponseQueue(block: {
+                completion(resultObjects)
             })
         }
         
         return self
     }
     
+    @discardableResult
     public func findAllObjectsSynchronouslyMeetingCondition(condition: String) -> [ObjectClass] {
         let predicate = NSPredicate(format: condition)
         
@@ -246,7 +259,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluate(with: object) {
                 resultObjects.append(object)
             }
         }
@@ -254,7 +267,8 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return resultObjects
     }
     
-    public func findFirstObjectWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: (object: ObjectClass?) -> Void) -> Self {
+    @discardableResult
+    public func findFirstObjectWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool, andCompletion completion: @escaping (_ object: ObjectClass?) -> Void) -> Self {
         runOnOperationQueue {
             let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
             
@@ -263,26 +277,27 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
             for i in 0..<numberOfObjects {
                 let object = self.objects[i]
                 
-                if predicate.evaluateWithObject(object) {
-                    self.moveObjectFromIndex(i, toIndex: 0)
+                if predicate.evaluateWithObject(object: object) {
+                    self.moveObjectFromIndex(currentIndex: i, toIndex: 0)
                     
-                    self.runOnResponseQueue({
-                        completion(object: object)
+                    self.runOnResponseQueue(block: {
+                        completion(object)
                     })
                     
                     return
                 }
             }
             
-            self.runOnResponseQueue({
-                completion(object: nil)
+            self.runOnResponseQueue(block: {
+                completion(nil)
             })
         }
         
         return self
     }
     
-    public func findFirstObjectSynchronouslyWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool) -> ObjectClass? {
+    @discardableResult
+    public func findFirstObjectSynchronouslyWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool) -> ObjectClass? {
         let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
         
         let numberOfObjects = self.objects.count
@@ -290,8 +305,8 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
-                self.moveObjectFromIndex(i, toIndex: 0)
+            if predicate.evaluateWithObject(object: object) {
+                self.moveObjectFromIndex(currentIndex: i, toIndex: 0)
                 return object
             }
         }
@@ -299,7 +314,8 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return nil
     }
     
-    public func findFirstObjectMeetingCondition(condition: String, andCompletion completion: (object: ObjectClass?) -> Void) -> Self {
+    @discardableResult
+    public func findFirstObjectMeetingCondition(condition: String, andCompletion completion: @escaping (_ object: ObjectClass?) -> Void) -> Self {
         runOnOperationQueue {
             let predicate = NSPredicate(format: condition)
             
@@ -308,25 +324,26 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
             for i in 0..<numberOfObjects {
                 let object = self.objects[i]
                 
-                if predicate.evaluateWithObject(object) {
-                    self.moveObjectFromIndex(i, toIndex: 0)
+                if predicate.evaluate(with: object) {
+                    self.moveObjectFromIndex(currentIndex: i, toIndex: 0)
                     
-                    self.runOnResponseQueue({
-                        completion(object: object)
+                    self.runOnResponseQueue(block: {
+                        completion(object)
                     })
                     
                     return
                 }
             }
             
-            self.runOnResponseQueue({
-                completion(object: nil)
+            self.runOnResponseQueue(block: {
+                completion(nil)
             })
         }
         
         return self
     }
     
+    @discardableResult
     public func findFirstObjectSynchronouslyMeetingCondition(condition: String) -> ObjectClass? {
         let predicate = NSPredicate(format: condition)
         
@@ -335,8 +352,8 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
-                self.moveObjectFromIndex(i, toIndex: 0)
+            if predicate.evaluate(with: object) {
+                self.moveObjectFromIndex(currentIndex: i, toIndex: 0)
                 return object
             }
         }
@@ -344,15 +361,16 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return nil
     }
     
+    @discardableResult
     public func insertObject(object: ObjectClass, withCompletion completion: (() -> Void)?) -> Self {
         runOnOperationQueue {
             if self._objects.count == 0 {
                 self._objects.append(object)
             } else {
-                self._objects.insert(object, atIndex: 0)
+                self._objects.insert(object, at: 0)
             }
             
-            self.runOnResponseQueue({ 
+            self.runOnResponseQueue(block: { 
                 completion?()
             })
         }
@@ -360,153 +378,175 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         return self
     }
     
-    public func insertObjectSynchronously(object: ObjectClass) -> Void {
+    @discardableResult
+    public func insertObjectSynchronously(object: ObjectClass) -> Self {
         if self._objects.count == 0 {
             self._objects.append(object)
         } else {
-            self._objects.insert(object, atIndex: 0)
+            self._objects.insert(object, at: 0)
         }
+        
+        return self
     }
     
-    public func deleteAllObjectsWithCompletion(completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
+    @discardableResult
+    public func deleteAllObjectsWithCompletion(completion: ((_ numberOfDeletedObjects: Int) -> Void)?) -> Self {
         runOnOperationQueue {
             let numberOfObjectsToDelete = self.objects.count
-            self._objects.removeAll(keepCapacity: false)
+            self._objects.removeAll(keepingCapacity: false)
             
-            self.runOnResponseQueue({
-                completion?(numberOfDeletedObjects: numberOfObjectsToDelete)
+            self.runOnResponseQueue(block: {
+                completion?(numberOfObjectsToDelete)
             })
         }
         
         return self
     }
     
-    public func deleteAllObjectsSynchronously() -> Void {
-        self._objects.removeAll(keepCapacity: false)
+    @discardableResult
+    public func deleteAllObjectsSynchronously() -> Self {
+        self._objects.removeAll(keepingCapacity: false)
+        return self
     }
     
-    public func deleteAllObjectsWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
+    @discardableResult
+    public func deleteAllObjectsWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool, andCompletion completion: ((_ numberOfDeletedObjects: Int) -> Void)?) -> Self {
         runOnOperationQueue {
             let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
             
-            let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingSelectionPredicate(predicate)
+            let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingSelectionPredicate(predicate: predicate)
             let numberOfObjectsToDelete = indexesOfObjectsToDelete.count
             
             for i in 0..<numberOfObjectsToDelete {
                 let indexOfCurrentObjectToDelete = indexesOfObjectsToDelete[i] - i
-                self._objects.removeAtIndex(indexOfCurrentObjectToDelete)
+                self._objects.remove(at: indexOfCurrentObjectToDelete)
             }
             
-            self.runOnResponseQueue({ 
-                completion?(numberOfDeletedObjects: numberOfObjectsToDelete)
+            self.runOnResponseQueue(block: { 
+                completion?(numberOfObjectsToDelete)
             })
         }
         
         return self
     }
     
-    public func deleteAllObjectsSynchronouslyWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool) -> Void {
+    @discardableResult
+    public func deleteAllObjectsSynchronouslyWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool) -> Self {
         let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
         
-        let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingSelectionPredicate(predicate)
+        let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingSelectionPredicate(predicate: predicate)
         let numberOfObjectsToDelete = indexesOfObjectsToDelete.count
         
         for i in 0..<numberOfObjectsToDelete {
             let indexOfCurrentObjectToDelete = indexesOfObjectsToDelete[i] - i
-            self._objects.removeAtIndex(indexOfCurrentObjectToDelete)
+            self._objects.remove(at: indexOfCurrentObjectToDelete)
         }
+        
+        return self
     }
     
-    public func deleteAllObjectsMeetingCondition(condition: String, andCompletion completion: ((numberOfDeletedObjects: Int) -> Void)?) -> Self {
+    @discardableResult
+    public func deleteAllObjectsMeetingCondition(condition: String, andCompletion completion: ((_ numberOfDeletedObjects: Int) -> Void)?) -> Self {
         runOnOperationQueue {
             let predicate = NSPredicate(format: condition)
             
-            let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingNSPredicate(predicate)
+            let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingNSPredicate(predicate: predicate)
             let numberOfObjectsToDelete = indexesOfObjectsToDelete.count
             
             for i in 0..<numberOfObjectsToDelete {
                 let indexOfCurrentObjectToDelete = indexesOfObjectsToDelete[i] - i
-                self._objects.removeAtIndex(indexOfCurrentObjectToDelete)
+                self._objects.remove(at: indexOfCurrentObjectToDelete)
             }
             
-            self.runOnResponseQueue({
-                completion?(numberOfDeletedObjects: numberOfObjectsToDelete)
+            self.runOnResponseQueue(block: {
+                completion?(numberOfObjectsToDelete)
             })
         }
         
         return self
     }
     
-    public func deleteAllObjectsSynchronouslyMeetingCondition(condition: String) -> Void {
+    @discardableResult
+    public func deleteAllObjectsSynchronouslyMeetingCondition(condition: String) -> Self {
         let predicate = NSPredicate(format: condition)
         
-        let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingNSPredicate(predicate)
+        let indexesOfObjectsToDelete = self.indexesOfAllObjectsSatisfyingNSPredicate(predicate: predicate)
         let numberOfObjectsToDelete = indexesOfObjectsToDelete.count
         
         for i in 0..<numberOfObjectsToDelete {
             let indexOfCurrentObjectToDelete = indexesOfObjectsToDelete[i] - i
-            self._objects.removeAtIndex(indexOfCurrentObjectToDelete)
+            self._objects.remove(at: indexOfCurrentObjectToDelete)
         }
+        
+        return self
     }
     
-    public func deleteFirstObjectWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool, andCompletion completion: ((deleted: Bool) -> Void)?) -> Self {
+    @discardableResult
+    public func deleteFirstObjectWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool, andCompletion completion: ((_ deleted: Bool) -> Void)?) -> Self {
         runOnOperationQueue {
             let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
             
-            let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingSelectionPredicate(predicate)
+            let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingSelectionPredicate(predicate: predicate)
             
             var deleted = false
             
             if indexOfObjectToDelete != nil {
-                self._objects.removeAtIndex(indexOfObjectToDelete!)
+                self._objects.remove(at: indexOfObjectToDelete!)
                 deleted = true
             }
             
-            self.runOnResponseQueue({
-                completion?(deleted: deleted)
+            self.runOnResponseQueue(block: {
+                completion?(deleted)
             })
         }
         
         return self
     }
     
-    public func deleteFirstObjectSynchronouslyWithPredicateBlock(predicateBlock: (object: ObjectClass) -> Bool) -> Void {
+    @discardableResult
+    public func deleteFirstObjectSynchronouslyWithPredicateBlock(predicateBlock: @escaping (_ object: ObjectClass) -> Bool) -> Self {
         let predicate = SelectionPredicate<ObjectClass>(block: predicateBlock)
-        let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingSelectionPredicate(predicate)
+        let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingSelectionPredicate(predicate: predicate)
         
         if indexOfObjectToDelete != nil {
-            self._objects.removeAtIndex(indexOfObjectToDelete!)
+            self._objects.remove(at: indexOfObjectToDelete!)
         }
+        
+        return self
     }
     
-    public func deleteFirstObjectMeetingCondition(condition: String, andCompletion completion: ((deleted: Bool) -> Void)?) -> Self {
+    @discardableResult
+    public func deleteFirstObjectMeetingCondition(condition: String, andCompletion completion: ((_ deleted: Bool) -> Void)?) -> Self {
         runOnOperationQueue {
             let predicate = NSPredicate(format: condition)
             
-            let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingNSPredicate(predicate)
+            let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingNSPredicate(predicate: predicate)
             
             var deleted = false
             
             if indexOfObjectToDelete != nil {
-                self._objects.removeAtIndex(indexOfObjectToDelete!)
+                self._objects.remove(at: indexOfObjectToDelete!)
                 deleted = true
             }
             
-            self.runOnResponseQueue({
-                completion?(deleted: deleted)
+            self.runOnResponseQueue(block: {
+                completion?(deleted)
             })
         }
         
         return self
     }
     
-    public func deleteFirstObjectSynchronouslyMeetingCondition(condition: String) -> Void {
+    @discardableResult
+    public func deleteFirstObjectSynchronouslyMeetingCondition(condition: String) -> Self {
         let predicate = NSPredicate(format: condition)
-        let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingNSPredicate(predicate)
+        let indexOfObjectToDelete = self.indexOfFirstObjectSatisfyingNSPredicate(predicate: predicate)
         
         if indexOfObjectToDelete != nil {
-            self._objects.removeAtIndex(indexOfObjectToDelete!)
+            self._objects.remove(at: indexOfObjectToDelete!)
         }
+        
+        return self
     }
     
     
@@ -519,7 +559,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluateWithObject(object: object) {
                 resultIndexes.append(i)
             }
         }
@@ -534,7 +574,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluate(with: object) {
                 resultIndexes.append(i)
             }
         }
@@ -548,7 +588,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluateWithObject(object: object) {
                 return i
             }
         }
@@ -562,7 +602,7 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
         for i in 0..<numberOfObjects {
             let object = self.objects[i]
             
-            if predicate.evaluateWithObject(object) {
+            if predicate.evaluate(with: object) {
                 return i
             }
         }
@@ -571,13 +611,13 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
     }
     
     private func runOnOperationQueue(block: () -> Void) {
-        dispatch_async(operationQueue) {
+        operationQueue.sync {
             block()
         }
     }
     
     private func runOnResponseQueue(block: () -> Void) {
-        dispatch_async(responseQueue) {
+        responseQueue.sync {
             block()
         }
     }
@@ -585,12 +625,12 @@ public class InMemoryTable<ObjectClass where ObjectClass: NSObject>: NSObject {
     private func moveObjectFromIndex(currentIndex: Int, toIndex newIndex: Int) {
         let objectToMove = _objects[currentIndex]
         
-        _objects.removeAtIndex(currentIndex)
+        _objects.remove(at: currentIndex)
         
         if newIndex > _objects.count - 1 {
             _objects.append(objectToMove)
         } else {
-            _objects.insert(objectToMove, atIndex: newIndex)
+            _objects.insert(objectToMove, at: newIndex)
         }
     }
     

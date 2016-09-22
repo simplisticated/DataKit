@@ -19,7 +19,7 @@ class UserTableViewCell: UITableViewCell {
         return "user-table-view-cell"
     }
     
-    class func heightForUser(user: User?) -> CGFloat {
+    class func heightForUser(_ user: User?) -> CGFloat {
         return 80.0
     }
     
@@ -38,16 +38,16 @@ class UserTableViewCell: UITableViewCell {
     
     // MARK: Outlets
     
-    @IBOutlet private weak var firstNameLabel: UILabel!
+    @IBOutlet fileprivate weak var firstNameLabel: UILabel!
     
-    @IBOutlet private weak var lastNameLabel: UILabel!
+    @IBOutlet fileprivate weak var lastNameLabel: UILabel!
     
-    @IBOutlet private weak var userIdLabel: UILabel!
+    @IBOutlet fileprivate weak var userIdLabel: UILabel!
     
     
     // MARK: Object variables & properties
     
-    private var _userUniqueIdentifier: String?
+    fileprivate var _userUniqueIdentifier: String?
     
     var userUniqueIdentifier: String? {
         get {
@@ -76,9 +76,9 @@ class UserTableViewCell: UITableViewCell {
             
             // Obtain user
             
-            let startTimestamp = NSDate().timeIntervalSince1970
+            let startTimestamp = Date().timeIntervalSince1970
             
-            InMemoryStorage.defaultStorage().tableForObjectWithType(User.self).findFirstObjectWithPredicateBlock({ (object) -> Bool in
+            InMemoryStorage.defaultStorage().tableForObjectWithType(objectType: User.self).findFirstObjectWithPredicateBlock(predicateBlock: { (object) -> Bool in
                 return object.uniqueIdentifier == newValue
                 }) { (object) in
                     // Update first name label
@@ -98,7 +98,7 @@ class UserTableViewCell: UITableViewCell {
                     
                     // Report time interval
                     
-                    let endTimestamp = NSDate().timeIntervalSince1970
+                    let endTimestamp = Date().timeIntervalSince1970
                     let timeInterval = endTimestamp - startTimestamp
                     
                     NSLog("Selection finished in %f seconds", timeInterval)
@@ -123,7 +123,7 @@ class UserTableViewCell: UITableViewCell {
         lastNameLabel.text = ""
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
