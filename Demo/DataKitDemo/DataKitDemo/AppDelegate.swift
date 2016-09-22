@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let dispatchGroup = DispatchGroup()
             
-            for i in 0..<20000 {
+            for i in 0..<2000 {
                 dispatchGroup.enter()
                 
                 let user = User()
