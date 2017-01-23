@@ -60,7 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = navigationController
         
         
-        
         // Fill database
         
         DispatchQueue.global().async {
