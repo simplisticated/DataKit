@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "DataKit"
-  s.version      = "3.0.2"
+  s.version      = "3.0.3"
   s.summary      = "Incredibly fast in-memory database for iOS."
 
   # This description is used to generate tags and improve search results.
@@ -56,7 +56,7 @@ Extremely fast in-memory database for iOS with intuitive and powerful internal l
   s.author             = { "Igor Matyushkin" => "igormatyushkin014@gmail.com" }
   #s.author    = "Igor Matyushkin"
   # s.authors            = { "Igor Matyushkin" => "igormatyushkin014@gmail.com" }
-  s.social_media_url   = "https://twitter.com/igormatyushkin1"
+  # s.social_media_url   = "https://twitter.com/igormatyushkin1"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
