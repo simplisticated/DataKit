@@ -53,7 +53,7 @@ public class InMemoryStorage: NSObject {
     // MARK: Public object methods
     
     public func tableForObjectWithType<ObjectClass: NSObject>(objectType: ObjectClass.Type) -> InMemoryTable<ObjectClass> {
-        let objectClassName = NSStringFromClass(ObjectClass.self)
+        let objectClassName = NSStringFromClass(objectType)
         
         var tableForSpecifiedClass = tables[objectClassName] as? InMemoryTable<ObjectClass>
         
